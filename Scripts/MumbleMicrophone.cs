@@ -85,6 +85,7 @@ namespace Mumble
 
         public void SetPositionalDataFunction(WritePositionalData writePositionalData)
         {
+            Debug.Log("Current Audio Positional Data:" +_previousPosition);
             _writePositionalDataFunc = writePositionalData;
         }
         public void setSettings(MicType microphoneSetting, int device){
