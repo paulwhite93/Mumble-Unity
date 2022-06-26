@@ -38,7 +38,10 @@ public class MumbleTester : MonoBehaviour {
     public string ChannelToJoin = "";
 
 	void Start () {
-        Username = GameManager.players[GameManager.MyID];
+        
+        if(GameObject.Find("GameManager"))
+            Username = GameManager.players[GameManager.MyID];
+
         if(HostName == "1.2.3.4")
         {
             Debug.LogError("Please set the mumble host name to your mumble server");
