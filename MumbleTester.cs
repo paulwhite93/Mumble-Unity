@@ -38,9 +38,6 @@ public class MumbleTester : MonoBehaviour {
     public string ChannelToJoin = "";
 
 	void Start () {
-        
-        if(GameObject.Find("GameManager"))
-            Username = GameManager.players[GameManager.MyID];
 
         if(HostName == "1.2.3.4")
         {
@@ -71,7 +68,6 @@ public class MumbleTester : MonoBehaviour {
                     MyMumbleMic.SetPositionalDataFunction(WritePositionalData);
             }
         }
-
 #if UNITY_EDITOR
         if (DebuggingVariables.EnableEditorIOGraph)
         {
@@ -80,6 +76,12 @@ public class MumbleTester : MonoBehaviour {
             StartCoroutine(UpdateEditorGraph());
         }
 #endif
+    }
+    public MumbleClient getClient(){
+        if(_mumbleClient != null)
+            return _mumbleClient;
+        else
+            return null;
     }
     /// <summary>
     /// An example of how to serialize the positional data that you're interested in
@@ -198,24 +200,9 @@ public class MumbleTester : MonoBehaviour {
             numPacketsLost += numLostThisSample;
         }
     }
-    public void setVoiceUIEnabled(){
-        VoiceUIEnabled = !VoiceUIEnabled;
-    }
 	void Update () {
         if (!_mumbleClient.ReadyToConnect)
             return;
-        if(Input.GetKeyDown(KeyCode.V)){          
-            if(VoiceUI == null && !VoiceUIEnabled){
-                VoiceUI = GameObject.Instantiate(VoIP_UI);
-                VoiceUI.GetComponent<VoiceUI>().SetUserMicrophone(MyMumbleMic);
-                VoiceUI.GetComponent<VoiceUI>().SetMumble(this);
-                setVoiceUIEnabled();
-            }
-            else
-                VoiceUI.GetComponent<VoiceUI>().Destroy();
-            
-
-        }
         // if (Input.GetKeyDown(KeyCode.S))
         // {
         //     _mumbleClient.SendTextMessage("This is an example message from Unity");
